@@ -20,7 +20,7 @@ spec:
           image: postgres:15-alpine
           ports:
             - containerPort: 5432
-          environment:
+          env:
             - name: POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
