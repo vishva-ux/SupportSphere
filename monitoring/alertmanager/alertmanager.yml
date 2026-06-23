@@ -1,0 +1,16 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'sysadmin-logs'
+
+receivers:
+  - name: 'sysadmin-logs'
+    webhook_configs:
+      # Send alerts to a dummy URL or local syslog collector
+      - url: 'http://backend:8000/api/notifications/alerts-webhook'
+        send_resolved: true
