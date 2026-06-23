@@ -14,7 +14,8 @@ from app.services.notifications import create_user_notification
 
 router = APIRouter(prefix="/tickets", tags=["Tickets"])
 
-UPLOAD_DIR = "/Users/vishva/Downloads/SupportSphere/backend/uploads"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.get("", response_model=List[TicketOut])
