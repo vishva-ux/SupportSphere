@@ -27,6 +27,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title=settings.PROJECT_NAME,
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    docs_url=f"{settings.API_V1_STR}/docs",
+    redoc_url=f"{settings.API_V1_STR}/redoc",
     lifespan=lifespan
 )
 
@@ -53,4 +55,4 @@ app.include_router(analytics.router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 def root_endpoint():
-    return {"message": "Welcome to SupportSphere Enterprise Service Desk API", "docs": "/docs"}
+    return {"message": "Welcome to SupportSphere Enterprise Service Desk API", "docs": f"{settings.API_V1_STR}/docs"}
