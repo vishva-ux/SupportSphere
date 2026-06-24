@@ -14,6 +14,21 @@ permissions:
   packages: write
 
 jobs:
+  check-secrets:
+    runs-on: ubuntu-latest
+    outputs:
+      has-kubeconfig: ${{ steps.check.outputs.has-kubeconfig }}
+    steps:
+      - id: check
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        run: |
+          if [ -z "$KUBE_CONFIG" ]; then
+            echo "has-kubeconfig=false" >> $GITHUB_OUTPUT
+          else
+            echo "has-kubeconfig=true" >> $GITHUB_OUTPUT
+          fi
+
   test-backend:
     runs-on: ubuntu-latest
     steps:
@@ -102,9 +117,9 @@ jobs:
             ghcr.io/${{ env.REPO_LC }}/frontend:${{ github.sha }}
 
   deploy-to-kubernetes:
-    needs: build-and-push-images
+    needs: [build-and-push-images, check-secrets]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && secrets.KUBE_CONFIG != ''
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && needs.check-secrets.outputs.has-kubeconfig == 'true'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
