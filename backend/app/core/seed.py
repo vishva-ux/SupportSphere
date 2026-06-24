@@ -21,7 +21,7 @@ def seed_database(db: Session):
         admin = User(
             email="admin@supportsphere.com",
             password_hash=get_password_hash("AdminSphere2026!"),
-            full_name="Administrator User",
+            full_name="Vishva",
             role="Administrator",
             department_id=it_dept.id if it_dept else None,
             is_active=True
@@ -29,7 +29,7 @@ def seed_database(db: Session):
         engineer = User(
             email="engineer@supportsphere.com",
             password_hash=get_password_hash("EngineerSphere2026!"),
-            full_name="Support Engineer Alice",
+            full_name="Peter",
             role="Support Engineer",
             department_id=it_dept.id if it_dept else None,
             is_active=True
@@ -37,7 +37,7 @@ def seed_database(db: Session):
         employee = User(
             email="employee@supportsphere.com",
             password_hash=get_password_hash("EmployeeSphere2026!"),
-            full_name="John Doe",
+            full_name="John",
             role="Employee",
             department_id=hr_dept.id if hr_dept else None,
             is_active=True
